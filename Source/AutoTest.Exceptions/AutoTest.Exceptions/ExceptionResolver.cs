@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoTest.Exceptions
 {
@@ -18,7 +15,7 @@ namespace AutoTest.Exceptions
         {
             Type typeOfException = typeof(Exception);
             IList<Type> types = new List<Type>();
-            
+
             foreach (Type type in assembly.GetTypes())
             {
                 if (typeOfException.IsAssignableFrom(type))
