@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -21,24 +22,29 @@ namespace AutoTest.Exceptions
             _serializationHelper = serializationHelper;
         }
 
-        public static void TestAllExceptions(Assembly assembly)
+        public static IDictionary<Type, string> TestAllExceptions(Assembly assembly)
         {
-            new ExceptionTester().TestExceptions(assembly);
+            return new ExceptionTester().TestExceptions(assembly);
         }
 
-        public void TestExceptions(Assembly assembly)
+        public IDictionary<Type, string> TestExceptions(Assembly assembly)
         {
             IList<Type> exceptions = _exceptionResolver.GetExceptions(assembly);
 
-            TestExceptionTypes(exceptions);
+            return TestExceptionTypes(exceptions);
         }
 
-        internal void TestExceptionTypes(IEnumerable<Type> exceptions)
+        internal IDictionary<Type, string> TestExceptionTypes(IEnumerable<Type> exceptions)
         {
+            IDictionary<Type, string> result = new ConcurrentDictionary<Type, string>();
+
             foreach (Type exceptionType in exceptions)
             {
                 TestExceptionOfType(exceptionType);
+                result.Add(exceptionType, string.Format("Tested exception of type [{0}] successfully", exceptionType));
             }
+
+            return result;
         }
 
         internal void TestExceptionOfType(Type exceptionType)
