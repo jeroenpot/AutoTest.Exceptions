@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.Serialization;
 
@@ -71,7 +72,9 @@ namespace AutoTest.Exceptions.UnitTests
         [Test]
         public void ShouldTestAllExceptionsInAutoTestExceptions()
         {
-            ExceptionTester.TestAllExceptions(Assembly.GetAssembly(typeof(ExceptionTester)));
+            IDictionary<Type, string> result = ExceptionTester.TestAllExceptions(Assembly.GetAssembly(typeof(ExceptionTester)));
+
+            Assert.That(result, Has.Count.EqualTo(1));
         }
     }
 }
