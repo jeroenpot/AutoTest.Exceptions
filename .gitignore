@@ -185,3 +185,4 @@ Source/SyncTool/packages/
 
 Source/packages/
 Source/AutoTest.Exceptions/packages/
+*.nupkg
