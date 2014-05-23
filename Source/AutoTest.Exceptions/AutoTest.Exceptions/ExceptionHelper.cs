@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 using AutoTest.Exceptions.Exceptions;
 
@@ -13,7 +14,7 @@ namespace AutoTest.Exceptions
 
         internal static void ThrowAutoTestException(Type exceptionType, string unformattedMessage, Exception exception)
         {
-            string exceptionMessage = string.Format(unformattedMessage, exceptionType);
+            string exceptionMessage = string.Format(CultureInfo.InvariantCulture, unformattedMessage, exceptionType);
             
             if (exception == null)
             {

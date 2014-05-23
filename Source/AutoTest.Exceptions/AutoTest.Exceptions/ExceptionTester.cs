@@ -1,44 +1,78 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 
 namespace AutoTest.Exceptions
 {
+    /// <summary>
+    /// Class for testing your exceptions.
+    /// </summary>
     public class ExceptionTester
     {
         private readonly IExceptionResolver _exceptionResolver;
 
         private readonly ISerializationHelper _serializationHelper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExceptionTester"/> class.
+        /// </summary>
         public ExceptionTester()
             : this(new ExceptionResolver(), new SerializationHelper())
         {
         }
 
+        // ReSharper disable once MemberCanBePrivate.Global
         internal ExceptionTester(IExceptionResolver exceptionResolver, ISerializationHelper serializationHelper)
         {
             _exceptionResolver = exceptionResolver;
             _serializationHelper = serializationHelper;
         }
 
-        public static void TestAllExceptions(Assembly assembly)
+        /// <summary>
+        /// Tests all exceptions.
+        /// </summary>
+        /// <param name="assembly">
+        /// The assembly.
+        /// </param>
+        /// <returns>
+        /// A dictionary containing all the tested exceptions.
+        /// </returns>
+        public static IDictionary<Type, string> TestAllExceptions(Assembly assembly)
         {
-            new ExceptionTester().TestExceptions(assembly);
+            return new ExceptionTester().TestExceptions(assembly);
         }
 
-        public void TestExceptions(Assembly assembly)
+        /// <summary>
+        /// Tests all exceptions.
+        /// </summary>
+        /// <param name="assembly">
+        /// The assembly.
+        /// </param>
+        /// <returns>
+        /// A dictionary containing all the tested exceptions.
+        /// </returns>
+        // ReSharper disable once MemberCanBePrivate.Global
+        public IDictionary<Type, string> TestExceptions(Assembly assembly)
         {
             IList<Type> exceptions = _exceptionResolver.GetExceptions(assembly);
 
-            TestExceptionTypes(exceptions);
+            return TestExceptionTypes(exceptions);
         }
 
-        internal void TestExceptionTypes(IEnumerable<Type> exceptions)
+        // ReSharper disable once MemberCanBePrivate.Global
+        internal IDictionary<Type, string> TestExceptionTypes(IEnumerable<Type> exceptions)
         {
+            IDictionary<Type, string> result = new ConcurrentDictionary<Type, string>();
+
             foreach (Type exceptionType in exceptions)
             {
                 TestExceptionOfType(exceptionType);
+                result.Add(exceptionType, string.Format(CultureInfo.InvariantCulture, "Tested exception of type [{0}] successfully", exceptionType));
             }
+
+            return result;
         }
 
         internal void TestExceptionOfType(Type exceptionType)
@@ -97,7 +131,7 @@ namespace AutoTest.Exceptions
             try
             {
                 const string Message = "ExceptionMessage";
-                Exception innerException = new Exception("InnerException");
+                Exception innerException = new Exception("Inner exception");
                 createdException = Activator.CreateInstance(exceptionType, Message, innerException) as Exception;
             }
             catch (Exception exception)
