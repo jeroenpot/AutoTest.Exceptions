@@ -10,7 +10,13 @@ For more information abpit the design guidelines see http://msdn.microsoft.com/e
 ##Usage##
 
 - Create a unittest project for your project and make a test class
-- Reference this package and include this code (Nunit Example)
+- Install the nuget package from https://www.nuget.org/packages/AutoTest.Exceptions/
+
+Or install via package console.
+
+```sh
+Install-Package AutoTest.Exceptions
+```
 
 ```sh
 [TestFixture]
