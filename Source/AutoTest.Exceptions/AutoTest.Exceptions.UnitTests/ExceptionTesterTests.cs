@@ -76,5 +76,11 @@ namespace AutoTest.Exceptions.UnitTests
 
             Assert.That(result, Has.Count.EqualTo(1));
         }
+
+        [Test]
+        public void ShouldThrowArgumentNullExceptionWhenAssemblyIsNull()
+        {
+            Assert.That(() => _exceptionTester.TestExceptions(null), Throws.Exception.TypeOf<ArgumentNullException>());
+        }
     }
 }
