@@ -56,6 +56,11 @@ namespace AutoTest.Exceptions
         // ReSharper disable once MemberCanBePrivate.Global
         public IDictionary<Type, string> TestExceptions(Assembly assembly)
         {
+            if (assembly == null)
+            {
+                throw new ArgumentNullException("assembly");
+            }
+
             IList<Type> exceptions = _exceptionResolver.GetExceptions(assembly);
 
             return TestExceptionTypes(exceptions);
