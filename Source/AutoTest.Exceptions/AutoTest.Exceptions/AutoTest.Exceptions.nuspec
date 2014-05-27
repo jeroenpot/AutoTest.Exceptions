@@ -6,7 +6,7 @@
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <licenseUrl>https://github.com/jeroenpot/AutoTest.Exceptions/blob/master/licence.txt</licenseUrl>
+    <licenseUrl>https://github.com/jeroenpot/AutoTest.Exceptions/blob/master/license.txt</licenseUrl>
     <projectUrl>https://github.com/jeroenpot/AutoTest.Exceptions/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
