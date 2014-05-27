@@ -2,10 +2,9 @@ AutoTest.Exception
 ==================
 Unittest all the custom Exceptions in your assembly against the microsoft design guidelines
  - Does it have all required constructors
- - Can it be serialized and deserialize
- - Are the constructor arguments set
-
-For more information abpit the design guidelines see http://msdn.microsoft.com/en-us/library/vstudio/ms229014(v=vs.100).aspx
+ - Can it be serialized and deserialized
+ 
+For more information about the design guidelines see http://msdn.microsoft.com/en-us/library/vstudio/ms229014(v=vs.100).aspx
 
 ##Usage##
 
