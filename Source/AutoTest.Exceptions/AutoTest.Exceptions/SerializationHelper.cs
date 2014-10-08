@@ -12,7 +12,7 @@ namespace AutoTest.Exceptions
         /// <typeparam name="T">The type of the exception.</typeparam>
         /// <param name="exceptionToSerialize">The exception to serialize.</param>
         /// <returns>The deserialized exception.</returns>
-        T SerializeAndDeserializeException<T>(T exceptionToSerialize) where T : Exception;
+        ResultMessage SerializeAndDeserializeException<T>(T exceptionToSerialize) where T : Exception;
     }
 
     internal class SerializationHelper : ISerializationHelper
@@ -23,13 +23,17 @@ namespace AutoTest.Exceptions
         /// <typeparam name="T">The type of the exception.</typeparam>
         /// <param name="exceptionToSerialize">The exception to serialize.</param>
         /// <returns>The deserialized exception.</returns>
-        public T SerializeAndDeserializeException<T>(T exceptionToSerialize) where T : Exception
+        public ResultMessage SerializeAndDeserializeException<T>(T exceptionToSerialize) where T : Exception
         {
+            ResultMessage resultMessage = new ResultMessage(exceptionToSerialize);
+
             BinaryFormatter formatter = new BinaryFormatter();
 
             using (MemoryStream memoryStream = new MemoryStream())
             {
+#pragma warning disable 219
                 T deserializeException = null;
+#pragma warning restore 219
                 try
                 {
                     formatter.Serialize(memoryStream, exceptionToSerialize);
@@ -37,19 +41,20 @@ namespace AutoTest.Exceptions
                 }
                 catch (Exception exception)
                 {
-                    ExceptionHelper.ThrowAutoTestException(exceptionToSerialize.GetType(), Properties.Resources.FailedToSerializeException, exception);
+                    return ResultMessageBuilder.ResultMessageForException(exceptionToSerialize.GetType(), Properties.Resources.FailedToSerializeException, exception);
                 }
 
                 try
                 {
+                    // ReSharper disable once RedundantAssignment
                     deserializeException = (T)formatter.Deserialize(memoryStream);
                 }
                 catch (Exception exception)
                 {
-                    ExceptionHelper.ThrowAutoTestException(exceptionToSerialize.GetType(), Properties.Resources.FailedToDeserializeException, exception);
+                    return ResultMessageBuilder.ResultMessageForException(exceptionToSerialize.GetType(), Properties.Resources.FailedToDeserializeException, exception);
                 }
 
-                return deserializeException;
+                return resultMessage;
             }
         }
     }

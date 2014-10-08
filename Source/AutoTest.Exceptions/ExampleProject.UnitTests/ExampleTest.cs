@@ -1,6 +1,10 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 using AutoTest.Exceptions;
+using AutoTest.Exceptions.Exceptions;
+using AutoTest.Exceptions.UnitTests.TestExceptions;
 
 using NUnit.Framework;
 
@@ -10,9 +14,17 @@ namespace ExampleProject.UnitTests
     public class ExampleTest
     {
         [Test]
-        public void TestAllMyCustomExceptions()
+        public void TestAllMyCustomExceptionsSuccessfull()
         {
-            ExceptionTester.TestAllExceptions(Assembly.GetAssembly(typeof(TestException)));
+            IList<ResultMessage> result = ExceptionTester.TestAllExceptions(Assembly.GetAssembly(typeof(TestException)));
+
+            Assert.That(result.Count, Is.EqualTo(12));
+        }
+
+        [Test]
+        public void ShouldThrowExceptionWhenNotAllExceptionsAreTestedSuccesfully()
+        {
+            Assert.Throws<AutoTestException>(() => ExceptionTester.TestAllExceptions(Assembly.GetAssembly(typeof(CorrectException))));
         }
     }
 }

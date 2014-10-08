@@ -53,6 +53,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AutoTest.Exceptions.UnitTests\AutoTest.Exceptions.UnitTests.csproj">
+      <Project>{67DE82DF-D4B8-4473-AC3B-1ABD70F73B03}</Project>
+      <Name>AutoTest.Exceptions.UnitTests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AutoTest.Exceptions\AutoTest.Exceptions.csproj">
       <Project>{cd2cd2fa-6f0f-4852-9bff-770e476f9f7b}</Project>
       <Name>AutoTest.Exceptions</Name>
