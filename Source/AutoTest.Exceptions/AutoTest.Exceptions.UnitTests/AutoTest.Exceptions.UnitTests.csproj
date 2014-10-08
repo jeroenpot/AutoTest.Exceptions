@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="ResultMessageTests.cs" />
     <Compile Include="TestExceptions\SerializableExceptionWithoutConstructorSerializationInfoAndStreamingContext.cs" />
     <Compile Include="TestExceptions\CorrectException.cs" />
     <Compile Include="ExceptionTesterTests.cs" />

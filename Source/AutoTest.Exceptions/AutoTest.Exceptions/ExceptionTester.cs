@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Linq;
 using System.Reflection;
+
+using AutoTest.Exceptions.Exceptions;
 
 namespace AutoTest.Exceptions
 {
@@ -39,7 +40,7 @@ namespace AutoTest.Exceptions
         /// <returns>
         /// A dictionary containing all the tested exceptions.
         /// </returns>
-        public static IDictionary<Type, string> TestAllExceptions(Assembly assembly)
+        public static IList<ResultMessage> TestAllExceptions(Assembly assembly)
         {
             return new ExceptionTester().TestExceptions(assembly);
         }
@@ -54,7 +55,7 @@ namespace AutoTest.Exceptions
         /// A dictionary containing all the tested exceptions.
         /// </returns>
         // ReSharper disable once MemberCanBePrivate.Global
-        public IDictionary<Type, string> TestExceptions(Assembly assembly)
+        public IList<ResultMessage> TestExceptions(Assembly assembly)
         {
             if (assembly == null)
             {
@@ -67,84 +68,104 @@ namespace AutoTest.Exceptions
         }
 
         // ReSharper disable once MemberCanBePrivate.Global
-        internal IDictionary<Type, string> TestExceptionTypes(IEnumerable<Type> exceptions)
+        internal IList<ResultMessage> TestExceptionTypes(IEnumerable<Type> exceptions)
         {
-            IDictionary<Type, string> result = new ConcurrentDictionary<Type, string>();
+            List<ResultMessage> messages = new List<ResultMessage>();
 
             foreach (Type exceptionType in exceptions)
             {
-                TestExceptionOfType(exceptionType);
-                result.Add(exceptionType, string.Format(CultureInfo.InvariantCulture, "Tested exception of type [{0}] successfully", exceptionType));
+                IList<ResultMessage> resultMessages = TestExceptionOfType(exceptionType);
+                messages.AddRange(resultMessages);
             }
 
-            return result;
-        }
-
-        internal void TestExceptionOfType(Type exceptionType)
-        {
-            Exception defaultConstructor = DefaultConstructorTest(exceptionType);
-            Exception constructorWithMessage = ConstructorWithMessageTest(exceptionType);
-            Exception constructorWithMessageAndInnerException = ConstructorWithMessageAndInnerExceptionTest(exceptionType);
-
-            SerializationTest(defaultConstructor, exceptionType);
-            SerializationTest(constructorWithMessage, exceptionType);
-            SerializationTest(constructorWithMessageAndInnerException, exceptionType);
-        }
-
-        private void SerializationTest(Exception exception, Type excecptionType)
-        {
-            Exception deserializedException = _serializationHelper.SerializeAndDeserializeException(exception);
-            if (deserializedException == null)
+            if (messages.Any(m => m.Success == false))
             {
-                ExceptionHelper.ThrowAutoTestException(excecptionType, Properties.Resources.ExceptionIsNullAfterSerializationAndDeserialization);
+                throw new AutoTestException("Not all exceptions could be tested successfully." + messages.CreateReadableList());
             }
+
+            return messages;
         }
 
-        private Exception DefaultConstructorTest(Type exceptionType)
+        internal IList<ResultMessage> TestExceptionOfType(Type exceptionType)
         {
+            IList<ResultMessage> resultMessages = new List<ResultMessage>();
+
+            resultMessages.Add(DefaultConstructorTest(exceptionType));
+            resultMessages.Add(ConstructorWithMessageTest(exceptionType));
+            resultMessages.Add(ConstructorWithMessageAndInnerExceptionTest(exceptionType));
+
+            if (resultMessages.All(m => m.Success))
+            {
+                resultMessages.Add(SerializationTest(exceptionType));
+            }
+
+            return resultMessages;
+        }
+
+        private ResultMessage SerializationTest(Type exceptionType)
+        {
+            Exception exception = Activator.CreateInstance(exceptionType) as Exception;
+            return _serializationHelper.SerializeAndDeserializeException(exception);
+        }
+
+        private ResultMessage DefaultConstructorTest(Type exceptionType)
+        {
+            ResultMessage resultMessage = new ResultMessage(exceptionType);
+
+#pragma warning disable 219
             Exception createdException = null;
+#pragma warning restore 219
             try
             {
+                // ReSharper disable once RedundantAssignment
                 createdException = Activator.CreateInstance(exceptionType) as Exception;
             }
             catch (Exception exception)
             {
-                ExceptionHelper.ThrowAutoTestException(exceptionType, Properties.Resources.FailedToCreateExceptionParameterless, exception);
+                resultMessage = ResultMessageBuilder.ResultMessageForException(exceptionType, Properties.Resources.FailedToCreateExceptionParameterless, exception);
             }
 
-            return createdException;
+            return resultMessage;
         }
 
-        private Exception ConstructorWithMessageTest(Type exceptionType)
+        private ResultMessage ConstructorWithMessageTest(Type exceptionType)
         {
+            ResultMessage resultMessage = new ResultMessage(exceptionType);
+#pragma warning disable 219
             Exception createdException = null;
+#pragma warning restore 219
             try
             {
+                // ReSharper disable once RedundantAssignment
                 createdException = Activator.CreateInstance(exceptionType, "ExceptionMessage") as Exception;
             }
             catch (Exception exception)
             {
-                ExceptionHelper.ThrowAutoTestException(exceptionType, Properties.Resources.FailedToCreateExceptionParameterMessage, exception);
+                resultMessage = ResultMessageBuilder.ResultMessageForException(exceptionType, Properties.Resources.FailedToCreateExceptionParameterMessage, exception);
             }
 
-            return createdException;
+            return resultMessage;
         }
 
-        private Exception ConstructorWithMessageAndInnerExceptionTest(Type exceptionType)
+        private ResultMessage ConstructorWithMessageAndInnerExceptionTest(Type exceptionType)
         {
+            ResultMessage resultMessage = new ResultMessage(exceptionType);
+#pragma warning disable 219
             Exception createdException = null;
+#pragma warning restore 219
             try
             {
                 const string Message = "ExceptionMessage";
                 Exception innerException = new Exception("Inner exception");
+                // ReSharper disable once RedundantAssignment
                 createdException = Activator.CreateInstance(exceptionType, Message, innerException) as Exception;
             }
             catch (Exception exception)
             {
-                ExceptionHelper.ThrowAutoTestException(exceptionType, Properties.Resources.FailedToCreateExceptionParameterMessageAndInnerException, exception);
+                resultMessage = ResultMessageBuilder.ResultMessageForException(exceptionType, Properties.Resources.FailedToCreateExceptionParameterMessageAndInnerException, exception);
             }
 
-            return createdException;
+            return resultMessage;
         }
     }
 }
