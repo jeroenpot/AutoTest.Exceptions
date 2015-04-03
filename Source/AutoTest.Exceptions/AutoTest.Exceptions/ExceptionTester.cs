@@ -34,35 +34,34 @@ namespace AutoTest.Exceptions
         /// <summary>
         /// Tests all exceptions.
         /// </summary>
-        /// <param name="assembly">
-        /// The assembly.
-        /// </param>
+        /// <param name="assembly">The assembly.</param>
+        /// <param name="exceptionsToIgnore">The exceptions to ignore.</param>
         /// <returns>
         /// A dictionary containing all the tested exceptions.
         /// </returns>
-        public static IList<ResultMessage> TestAllExceptions(Assembly assembly)
+        public static IList<ResultMessage> TestAllExceptions(Assembly assembly, params Type[] exceptionsToIgnore)
         {
-            return new ExceptionTester().TestExceptions(assembly);
+            return new ExceptionTester().TestExceptions(assembly, exceptionsToIgnore);
         }
 
         /// <summary>
         /// Tests all exceptions.
         /// </summary>
-        /// <param name="assembly">
-        /// The assembly.
-        /// </param>
+        /// <param name="assembly">The assembly.</param>
+        /// <param name="exceptionsToIgnore">The exceptions to ignore.</param>
         /// <returns>
         /// A dictionary containing all the tested exceptions.
         /// </returns>
+        /// <exception cref="System.ArgumentNullException">assembly</exception>
         // ReSharper disable once MemberCanBePrivate.Global
-        public IList<ResultMessage> TestExceptions(Assembly assembly)
+        internal IList<ResultMessage> TestExceptions(Assembly assembly, params Type[] exceptionsToIgnore)
         {
             if (assembly == null)
             {
                 throw new ArgumentNullException("assembly");
             }
 
-            IList<Type> exceptions = _exceptionResolver.GetExceptions(assembly);
+            IList<Type> exceptions = _exceptionResolver.GetExceptions(assembly, exceptionsToIgnore);
 
             return TestExceptionTypes(exceptions);
         }
