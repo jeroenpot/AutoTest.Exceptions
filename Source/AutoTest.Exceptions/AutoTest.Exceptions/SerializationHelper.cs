@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace AutoTest.Exceptions
@@ -27,7 +28,8 @@ namespace AutoTest.Exceptions
         {
             ResultMessage resultMessage = new ResultMessage(exceptionToSerialize);
 
-            BinaryFormatter formatter = new BinaryFormatter();
+            IFormatter formatter = new BinaryFormatter();
+            formatter.Binder = new Binder();
 
             using (MemoryStream memoryStream = new MemoryStream())
             {

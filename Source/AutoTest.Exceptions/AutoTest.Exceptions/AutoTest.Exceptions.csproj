@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Binder.cs" />
     <Compile Include="ResultMessageBuilder.cs" />
     <Compile Include="ExceptionResolver.cs" />
     <Compile Include="Exceptions\AutoTestException.cs" />
