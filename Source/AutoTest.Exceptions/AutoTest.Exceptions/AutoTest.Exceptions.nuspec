@@ -11,6 +11,6 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <copyright>Copyright 2014</copyright>
-    <tags>unit-test unittest test exception exceptions</tags>
+    <tags>autotest exception exceptions unit-test unittest test</tags>
   </metadata>
 </package>
