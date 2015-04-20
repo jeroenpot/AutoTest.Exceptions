@@ -1,0 +1,12 @@
+version: 1.0.6
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_file_version: '{version}'
+build:
+  publish_nuget: true
+  verbosity: minimal
+deploy:
+- provider: NuGet
+  on:
+    branch: master
