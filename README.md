@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/h0vo52hogp69ju2t?svg=true)](https://ci.appveyor.com/project/jeroenpot/autotest-exceptions)
+
 AutoTest.Exception
 ==================
 Unittest all the custom Exceptions in your assembly against the microsoft design guidelines
