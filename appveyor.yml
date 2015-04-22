@@ -1,7 +1,7 @@
-version: 1.0.{build}
+version: 1.0.7.{build}
 skip_tags: true
-install:
-    - nuget restore -SolutionDirectory Source\AutoTest.Exceptions
+#install:
+#    - nuget restore -SolutionDirectory Source\AutoTest.Exceptions
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
@@ -10,13 +10,13 @@ assembly_info:
   assembly_informational_version: '{version}'
 build:
   publish_nuget: true
-  verbosity: detailed
-environment:
-    COVERALLS_REPO_TOKEN:  
-       secure: nir5STPp1EOEkFP0DaS23pd2rHYzvEiturTJQ5ewVKVoCr+6Ei6f57Stihm/r/re
-after_test: 
-    - Source\AutoTest.Exceptions\packages\OpenCover.4.5.3723\OpenCover.Console.exe -register:user -filter:"+[*]*" -target:"Source\AutoTest.Exceptions\packages\NUnit.Runners.2.6.4\tools\nunit-console.exe" -targetargs:"/noshadow /domain:single  Source\AutoTest.Exceptions\AutoTest.Exceptions.UnitTests\bin\Debug\AutoTest.Exceptions.UnitTests.dll" -output:coverage.xml
-    - Source\AutoTest.Exceptions\packages\coveralls.net.0.5.0\csmacnz.Coveralls.exe --opencover coverage.xml- provider: NuGet
+#  verbosity: detailed
+#environment:
+#    COVERALLS_REPO_TOKEN:  
+#       secure: nir5STPp1EOEkFP0DaS23pd2rHYzvEiturTJQ5ewVKVoCr+6Ei6f57Stihm/r/re
+#after_test: 
+#    - Source\AutoTest.Exceptions\packages\OpenCover.4.5.3723\OpenCover.Console.exe -register:user -filter:"+[*]*" -target:"Source\AutoTest.Exceptions\packages\NUnit.Runners.2.6.4\tools\nunit-console.exe" -targetargs:"/noshadow /domain:single  Source\AutoTest.Exceptions\AutoTest.Exceptions.UnitTests\bin\Debug\AutoTest.Exceptions.UnitTests.dll" -output:coverage.xml
+#    - Source\AutoTest.Exceptions\packages\coveralls.net.0.5.0\csmacnz.Coveralls.exe --opencover coverage.xml- provider: NuGet
 deploy:
 - provider: NuGet
   api_key:
