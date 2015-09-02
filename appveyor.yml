@@ -1,7 +1,7 @@
 version: 1.0.7.{build}
 skip_tags: true
-install:
-    - nuget restore Source\AutoTest.Exceptions\AutoTest.Exceptions.sln
+#install:
+    #- nuget restore Source\AutoTest.Exceptions\AutoTest.Exceptions.sln
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
@@ -15,7 +15,6 @@ environment:
     COVERALLS_REPO_TOKEN:  
        secure: nir5STPp1EOEkFP0DaS23pd2rHYzvEiturTJQ5ewVKVoCr+6Ei6f57Stihm/r/re
 after_test: 
-  - ps: dir "C:\projects\autotest-exceptions\Source\AutoTest.Exceptions\"
   - Source\AutoTest.Exceptions\packages\OpenCover.4.5.3723\OpenCover.Console.exe -register:user -target:"Source\AutoTest.Exceptions\packages\NUnit.Runners.2.6.4\tools\nunit-console.exe" "-targetargs:""Source\AutoTest.Exceptions\AutoTest.Exceptions.UnitTests\bin\$env:CONFIGURATION\AutoTest.Exceptions.UnitTests.dll"" /noshadow" -output:opencoverCoverage.xml
   - Source\AutoTest.Exceptions\packages\coveralls.net.0.5.0\csmacnz.Coveralls.exe --opencover -i opencoverCoverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_JOB_ID
 deploy:
