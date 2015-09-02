@@ -1,4 +1,5 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/h0vo52hogp69ju2t?svg=true)](https://ci.appveyor.com/project/jeroenpot/autotest-exceptions)
+[![Coverage Status](https://coveralls.io/repos/jeroenpot/AutoTest.Exceptions/badge.svg?branch=&service=github)](https://coveralls.io/github/jeroenpot/AutoTest.Exceptions?branch=)
 
 AutoTest.Exception
 ==================
