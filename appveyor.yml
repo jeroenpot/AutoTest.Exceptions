@@ -17,7 +17,7 @@ environment:
 after_test: 
   - Source\AutoTest.Exceptions\packages\OpenCover.4.5.3723\OpenCover.Console.exe -mergeoutput -register:user -target:"Source\AutoTest.Exceptions\packages\NUnit.Runners.2.6.4\tools\nunit-console.exe" "-targetargs:""Source\AutoTest.Exceptions\AutoTest.Exceptions.UnitTests\bin\Debug\AutoTest.Exceptions.UnitTests.dll"" /noshadow" -output:opencoverCoverage.xml
   - Source\AutoTest.Exceptions\packages\OpenCover.4.5.3723\OpenCover.Console.exe -mergeoutput -register:user -target:"Source\AutoTest.Exceptions\packages\NUnit.Runners.2.6.4\tools\nunit-console.exe" "-targetargs:""Source\AutoTest.Exceptions\ExampleProject.UnitTests\bin\Debug\ExampleProject.UnitTests.dll"" /noshadow" -output:opencoverCoverage.xml
-  - Source\AutoTest.Exceptions\packages\coveralls.net.0.5.0\csmacnz.Coveralls.exe --opencover -i opencoverCoverage.xml --repoToken %COVERALLS_REPO_TOKEN% --commitBranch %APPVEYOR_REPO_BRANCH% --commitId %APPVEYOR_REPO_COMMIT%
+  - Source\AutoTest.Exceptions\packages\coveralls.net.0.5.0\csmacnz.Coveralls.exe --opencover -i opencoverCoverage.xml --repoToken %COVERALLS_REPO_TOKEN% --commitBranch %APPVEYOR_REPO_BRANCH% 
   #--commitId %APPVEYOR_REPO_COMMIT%  --commitAuthor %APPVEYOR_REPO_COMMIT_AUTHOR% --commitEmail %APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL% --commitMessage %APPVEYOR_REPO_COMMIT_MESSAGE% --jobId %APPVEYOR_JOB_ID%
 deploy:
 - provider: NuGet
