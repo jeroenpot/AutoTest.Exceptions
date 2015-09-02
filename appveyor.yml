@@ -1,7 +1,7 @@
 version: 1.0.7.{build}
 skip_tags: true
 install:
-    - nuget restore -solutiondirectory D:\Source\AutoTest.Exceptions\Source\AutoTest.Exceptions\
+    - nuget restore Source\AutoTest.Exceptions\AutoTest.Exceptions.sln
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
