@@ -13,6 +13,7 @@ namespace AutoTest.Exceptions.UnitTests
             Exception exception = null;
 
             // ReSharper disable once ExpressionIsAlwaysNull
+            // ReSharper disable once ObjectCreationAsStatement
             Assert.Throws<ArgumentNullException>(() => new ResultMessage(exception));
         }
     }
