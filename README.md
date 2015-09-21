@@ -1,6 +1,3 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/h0vo52hogp69ju2t?svg=true)](https://ci.appveyor.com/project/jeroenpot/autotest-exceptions)
-[![Coverage Status](https://coveralls.io/repos/jeroenpot/AutoTest.Exceptions/badge.svg?branch=&service=github)](https://coveralls.io/github/jeroenpot/AutoTest.Exceptions?branch=)
-
 AutoTest.Exception
 ==================
 Unittest all the custom Exceptions in your assembly against the microsoft design guidelines
@@ -8,6 +5,11 @@ Unittest all the custom Exceptions in your assembly against the microsoft design
  - Can it be serialized and deserialized
  
 For more information about the design guidelines see http://msdn.microsoft.com/en-us/library/vstudio/ms229014(v=vs.100).aspx
+
+Build status| Coverage Status| NuGet downloads
+----------- | -------------- | --------------- 
+[![Build status](https://ci.appveyor.com/api/projects/status/h0vo52hogp69ju2t?svg=true)](https://ci.appveyor.com/project/jeroenpot/autotest-exceptions)|[![Coverage Status](https://coveralls.io/repos/jeroenpot/AutoTest.Exceptions/badge.svg?branch=&service=github)](https://coveralls.io/github/jeroenpot/AutoTest.Exceptions?branch=)|[![NuGet downloads MySqlHelper](https://img.shields.io/nuget/dt/AutoTest.Exceptions.svg)](https://www.nuget.org/packages/AutoTest.Exception)
+
 
 ##Usage##
 
