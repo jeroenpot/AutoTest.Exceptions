@@ -11,14 +11,14 @@ namespace AutoTest.Exceptions
     {
         IList<Type> GetExceptions(Assembly assembly, params Type[] exceptionsToIgnore);
 
-        IList<Type> GetExceptions(Assembly assembly, IEnumerable<Type> exceptionsToIgnore);
+        IList<Type> GetExceptions(Assembly assembly, ICollection<Type> exceptionsToIgnore);
     }
 
     internal class ExceptionResolver : IExceptionResolver
     {
         public IList<Type> GetExceptions(Assembly assembly, params Type[] exceptionsToIgnore)
         {
-            IEnumerable<Type> types = null;
+            ICollection<Type> types = null;
             if (exceptionsToIgnore != null)
             {
                 types = exceptionsToIgnore.ToList();
@@ -27,7 +27,7 @@ namespace AutoTest.Exceptions
             return GetExceptions(assembly, types);
         }
 
-        public IList<Type> GetExceptions(Assembly assembly, IEnumerable<Type> exceptionsToIgnore)
+        public IList<Type> GetExceptions(Assembly assembly, ICollection<Type> exceptionsToIgnore)
         {
             Type typeOfException = typeof(Exception);
             ConcurrentBag<Type> types = new ConcurrentBag<Type>();
@@ -36,13 +36,8 @@ namespace AutoTest.Exceptions
                 assembly.GetTypes(),
                 type =>
                 {
-                    if (exceptionsToIgnore != null && exceptionsToIgnore.Any())
-                    {
-                        if (exceptionsToIgnore.Contains(type))
-                        {
-                            return;
-                        }
-                    }
+                    if (exceptionsToIgnore != null && exceptionsToIgnore.Any() && exceptionsToIgnore.Contains(type))
+                        return;
 
                     if (typeOfException.IsAssignableFrom(type))
                     {

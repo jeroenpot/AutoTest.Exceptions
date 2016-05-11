@@ -58,7 +58,7 @@ namespace AutoTest.Exceptions
         {
             if (assembly == null)
             {
-                throw new ArgumentNullException("assembly");
+                throw new ArgumentNullException(nameof(assembly));
             }
 
             IList<Type> exceptions = _exceptionResolver.GetExceptions(assembly, exceptionsToIgnore);
@@ -112,6 +112,7 @@ namespace AutoTest.Exceptions
             ResultMessage resultMessage = new ResultMessage(exceptionType);
 
 #pragma warning disable 219
+            // ReSharper disable once NotAccessedVariable
             Exception createdException = null;
 #pragma warning restore 219
             try
@@ -131,6 +132,7 @@ namespace AutoTest.Exceptions
         {
             ResultMessage resultMessage = new ResultMessage(exceptionType);
 #pragma warning disable 219
+            // ReSharper disable once NotAccessedVariable
             Exception createdException = null;
 #pragma warning restore 219
             try
@@ -150,14 +152,15 @@ namespace AutoTest.Exceptions
         {
             ResultMessage resultMessage = new ResultMessage(exceptionType);
 #pragma warning disable 219
+            // ReSharper disable once NotAccessedVariable
             Exception createdException = null;
 #pragma warning restore 219
             try
             {
-                const string Message = "ExceptionMessage";
+                const string message = "ExceptionMessage";
                 Exception innerException = new Exception("Inner exception");
                 // ReSharper disable once RedundantAssignment
-                createdException = Activator.CreateInstance(exceptionType, Message, innerException) as Exception;
+                createdException = Activator.CreateInstance(exceptionType, message, innerException) as Exception;
             }
             catch (Exception exception)
             {
