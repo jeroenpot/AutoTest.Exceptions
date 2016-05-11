@@ -14,8 +14,8 @@ environment:
     COVERALLS_REPO_TOKEN:  
        secure: nir5STPp1EOEkFP0DaS23pd2rHYzvEiturTJQ5ewVKVoCr+6Ei6f57Stihm/r/re
 after_test: 
-  - Source\AutoTest.Exceptions\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -mergeoutput -register:user -target:"Source\AutoTest.Exceptions\packages\NNUnit.ConsoleRunner.3.2.1\tools\nunit-console.exe" "-targetargs:""Source\AutoTest.Exceptions\AutoTest.Exceptions.UnitTests\bin\Debug\AutoTest.Exceptions.UnitTests.dll"" /noshadow" -output:opencoverCoverage.xml
-  - Source\AutoTest.Exceptions\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -mergeoutput -register:user -target:"Source\AutoTest.Exceptions\packages\NNUnit.ConsoleRunner.3.2.1\tools\nunit-console.exe" "-targetargs:""Source\AutoTest.Exceptions\ExampleProject.UnitTests\bin\Debug\ExampleProject.UnitTests.dll"" /noshadow" -output:opencoverCoverage.xml
+  - Source\AutoTest.Exceptions\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -mergeoutput -register:user -target:"Source\AutoTest.Exceptions\packages\NUnit.ConsoleRunner.3.2.1\tools\nunit-console.exe" "-targetargs:""Source\AutoTest.Exceptions\AutoTest.Exceptions.UnitTests\bin\Debug\AutoTest.Exceptions.UnitTests.dll"" /noshadow" -output:opencoverCoverage.xml
+  - Source\AutoTest.Exceptions\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -mergeoutput -register:user -target:"Source\AutoTest.Exceptions\packages\NUnit.ConsoleRunner.3.2.1\tools\nunit-console.exe" "-targetargs:""Source\AutoTest.Exceptions\ExampleProject.UnitTests\bin\Debug\ExampleProject.UnitTests.dll"" /noshadow" -output:opencoverCoverage.xml
   - Source\AutoTest.Exceptions\packages\coveralls.net.0.6.0\tools\csmacnz.Coveralls.exe --opencover -i opencoverCoverage.xml --repoToken %COVERALLS_REPO_TOKEN% --commitBranch %APPVEYOR_REPO_BRANCH% 
 deploy:
 - provider: NuGet
