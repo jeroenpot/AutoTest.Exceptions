@@ -8,7 +8,7 @@ For more information about the design guidelines see http://msdn.microsoft.com/e
 
 Build status| Coverage Status| NuGet downloads
 ----------- | -------------- | --------------- 
-[![Build status](https://ci.appveyor.com/api/projects/status/h0vo52hogp69ju2t?svg=true)](https://ci.appveyor.com/project/jeroenpot/autotest-exceptions)|[![Coverage Status](https://coveralls.io/repos/jeroenpot/AutoTest.Exceptions/badge.svg?branch=&service=github)](https://coveralls.io/github/jeroenpot/AutoTest.Exceptions?branch=)|[![NuGet downloads MySqlHelper](https://img.shields.io/nuget/dt/AutoTest.Exceptions.svg)](https://www.nuget.org/packages/AutoTest.Exception)
+[![Build status](https://ci.appveyor.com/api/projects/status/h0vo52hogp69ju2t?svg=true)](https://ci.appveyor.com/project/jeroenpot/autotest-exceptions)|[![Coverage Status](https://coveralls.io/repos/jeroenpot/AutoTest.Exceptions/badge.svg?branch=&service=github)](https://coveralls.io/github/jeroenpot/AutoTest.Exceptions?branch=)|[![NuGet downloads](https://img.shields.io/nuget/v/AutoTest.Exceptions.svg?maxAge=2592000)](https://www.nuget.org/packages/AutoTest.Exception)
 
 
 ##Usage##
