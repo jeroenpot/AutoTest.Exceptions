@@ -34,6 +34,7 @@ namespace AutoTest.Exceptions
             using (MemoryStream memoryStream = new MemoryStream())
             {
 #pragma warning disable 219
+                // ReSharper disable once NotAccessedVariable
                 T deserializeException = null;
 #pragma warning restore 219
                 try
